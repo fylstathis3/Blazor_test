@@ -1,0 +1,61 @@
+﻿
+
+<h1>Hello, @StringUtilities.CustomToUpper(name)</h1>
+
+<p>Let's add 2 + 2 = @(2+2)</p>
+
+<button @onclick="@(()=>Console.WriteLine("whatever"))">Click me</button>
+<button @onclick="@WriteInLog">Click me</button>
+
+<div>
+    <h3>Movie</h3>
+    <p>@spiderman.Title</p>
+</div>
+
+@if (movies==null)
+{
+    <text>Loading.....</text>
+}
+else
+{
+    @foreach (var movie in movies)
+    {
+        <p>@((MarkupString)movie.Title)</p>
+    }
+}
+
+
+@code{
+    string name = "Felipe";
+
+    List<Movie> movies;
+    protected async override Task OnInitializedAsync()
+    {
+        await Task.Delay(3000);
+        var movies = new List<Movie>()
+        {
+            new Movie(){
+                Title = "<b>None</b>",
+                ReleaseDate = DateTime.Now
+            },
+            new Movie(){
+                Title = "<i>None2</i>",
+                ReleaseDate = DateTime.Now
+            }
+        };
+    }
+
+
+
+    string CustomToUpper(string value) => value.ToUpper();
+    Movie spiderman = new Movie()
+    {
+        Title = "Spide-Man: Far From Home",
+        ReleaseDate = new DateTime(2019, 7, 2)
+    };
+
+    void WriteInLog()
+    {
+        Console.WriteLine("new whatever");
+    }
+}
