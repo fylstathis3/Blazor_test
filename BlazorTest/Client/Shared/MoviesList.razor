@@ -1,0 +1,68 @@
+@inject IJSRuntime js
+
+<input type="checkbox" @bind="displayButtons"/>
+<GenericList List="Movies">
+    <ElementTemplate Context="movie">
+        <IndividualMovie Movie="movie" DisplayButtons = "displayButtons" DeleteMovie="DeleteMovie" />
+    </ElementTemplate>
+</GenericList>
+
+<Confirmation @ref="confirmation" onCancel="OnCancel" onConfirm="OnConfirm">
+    <div>Do you wish to delete @movieToBeDeleted.Title?</div>
+</Confirmation>
+
+@code
+{
+    Confirmation confirmation;
+    [Parameter] public List<Movie> Movies { get; set; }
+
+    bool displayButtons = false;
+
+    public void Something() { }
+
+    Movie movieToBeDeleted;
+    private async Task DeleteMovie(Movie movie)
+    {
+        movieToBeDeleted = movie;
+        confirmation.Show();
+        @* await js.MyFunction("custom message");
+            var confirm = await js.Confirm($"Are you sure you want to delete {movie.Title}?");
+            if (confirm)
+            {
+            Movies.Remove(movie);
+            } *@
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("OnInitialized. Movies.Count = " + Movies.Count.ToString());
+    }
+
+    void OnConfirm()
+    {
+        Movies.Remove(movieToBeDeleted);
+        confirmation.Hide();
+        movieToBeDeleted = null;
+    }
+
+    void OnCancel()
+    {
+        confirmation.Hide();
+        movieToBeDeleted = null;
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("OnParametersSet. Movies.Count = " + Movies.Count.ToString());
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("OnAfterRender. FirstRender = " + firstRender.ToString());
+    }
+
+    protected override bool ShouldRender()
+    {
+        return true;
+    }
+}    

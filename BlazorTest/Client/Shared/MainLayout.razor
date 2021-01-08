@@ -11,7 +11,24 @@
         </div>
 
         <div class="content px-4">
-            @Body
+            <CascadingValue Value="@appState">
+                @Body
+            </CascadingValue>
+            @* <CascadingValue Value="@Color" Name="Color">
+                            <CascadingValue Value="@Size" Name="Size"> *@
+
+            @* <BlazorTest.Client.Pages.Counter></BlazorTest.Client.Pages.Counter> *@
+            @* </CascadingValue>
+                        </CascadingValue> *@
         </div>
     </div>
 </div>
+
+@code{
+    AppState appState = new AppState();
+    public class AppState
+    {
+        public string Color = "red";
+        public string Size = "12px";
+    }
+}

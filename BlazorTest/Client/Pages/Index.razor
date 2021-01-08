@@ -1,52 +1,62 @@
-﻿
+﻿@page "/"
+@inject IRepository repository
+@using static BlazorTest.Client.Shared.MainLayout
 
 <h1>Hello, @StringUtilities.CustomToUpper(name)</h1>
 
-<p>Let's add 2 + 2 = @(2+2)</p>
-
-<button @onclick="@(()=>Console.WriteLine("whatever"))">Click me</button>
-<button @onclick="@WriteInLog">Click me</button>
+<p style="color:@AppState.Color">Let's add 2 + 2 = @(2+2)</p>
+@* 
+    <button @onclick="@(()=>Console.WriteLine("whatever"))">Click me</button> *@
+@* <button @onclick="@WriteInLog">Click me</button> *@
 
 <div>
     <h3>Movie</h3>
+    <MoviesList @ref="moviesList" Movies="movies">
+        </MoviesList>
     <p>@spiderman.Title</p>
 </div>
 
-@if (movies==null)
-{
-    <text>Loading.....</text>
-}
-else
-{
-    @foreach (var movie in movies)
-    {
-        <p>@((MarkupString)movie.Title)</p>
-    }
-}
+<div>
+    <h2>Create a movie</h2>
+    @* <DummyTextBox placeholder="movie name" disabled="true"/> *@
+    <DummyTextBox @attributes="dummyTextBoxParameters"/>
+</div>
+
+<button @onclick="AddNewMovie">Add new movie</button>
 
 
 @code{
-    string name = "Felipe";
+    [CascadingParameter] public AppState AppState { get; set; }
+    private MoviesList moviesList;
+    private Dictionary<string, object> dummyTextBoxParameters = new Dictionary<string, object>()
+    {
+        {"placeholder", "new movie name"},
+        {"disabled", "true"}
+    };
 
-    List<Movie> movies;
+    private void AddNewMovie()
+    {
+        moviesList.Something();
+        movies.Add(new Movie() { Title = "Movie Sample", ReleaseDate = DateTime.Today });
+    }
+    private List<Movie> movies;
     protected async override Task OnInitializedAsync()
     {
-        await Task.Delay(3000);
-        var movies = new List<Movie>()
+        @* await Task.Delay(3000); *@
+        @* movies = new List<Movie>()
         {
-            new Movie(){
-                Title = "<b>None</b>",
-                ReleaseDate = DateTime.Now
-            },
-            new Movie(){
-                Title = "<i>None2</i>",
-                ReleaseDate = DateTime.Now
-            }
-        };
+        new Movie(){
+        Title = "<b>None</b>",
+        ReleaseDate = DateTime.Now
+        },
+        new Movie(){
+        Title = "<i>None2</i>",
+        ReleaseDate = DateTime.Now
+        }
+        }; *@
+        movies = repository.GetMovies();
     }
-
-
-
+    string name = "Felipe";
     string CustomToUpper(string value) => value.ToUpper();
     Movie spiderman = new Movie()
     {
