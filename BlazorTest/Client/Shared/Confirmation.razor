@@ -1,8 +1,8 @@
 @if (displayConfirmation)
 {
-    <div class="modal-backdrop show"></div>
+            <div class="modal-backdrop show"></div>
 
-    <div class="modal fade show" id="exampleModal" tabIndex="-1"
+            <div class="modal fade show" id="exampleModal" tabIndex="-1"
 role="dialog" arai-labelledby="exampleModalLabel" arai-hidden="true" style="display:block;">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
@@ -19,7 +19,7 @@ role="dialog" arai-labelledby="exampleModalLabel" arai-hidden="true" style="disp
     </div>
     <div class="modal-footer">
         <button @onclick="OnCancel" type="button" class="btn btn-secondary">Cancel</button>
-        <button @onclick="OnConfirm" type="button" class="btn btn-primary">Ok</button>
+        <button @onclick="onConfirm" type="button" class="btn btn-primary">Ok</button>
     </div>
 </div>
 </div>
@@ -31,7 +31,7 @@ role="dialog" arai-labelledby="exampleModalLabel" arai-hidden="true" style="disp
     private bool displayConfirmation { get; set; }
     [Parameter] public string Title { get; set; } = "Confirm";
     [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public EventCallback OnConfirm { get; set; }
+    [Parameter] public EventCallback onConfirm { get; set; }
     [Parameter] public EventCallback OnCancel { get; set; }
     public void Show() => displayConfirmation = true;
     public void Hide() => displayConfirmation = false;

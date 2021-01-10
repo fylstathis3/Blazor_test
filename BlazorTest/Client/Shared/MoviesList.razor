@@ -7,7 +7,7 @@
     </ElementTemplate>
 </GenericList>
 
-<Confirmation @ref="confirmation" onCancel="OnCancel" onConfirm="OnConfirm">
+<Confirmation @ref="confirmation"  onConfirm="onConfirm">
     <div>Do you wish to delete @movieToBeDeleted.Title?</div>
 </Confirmation>
 
@@ -38,7 +38,7 @@
         Console.WriteLine("OnInitialized. Movies.Count = " + Movies.Count.ToString());
     }
 
-    void OnConfirm()
+    void onConfirm()
     {
         Movies.Remove(movieToBeDeleted);
         confirmation.Hide();

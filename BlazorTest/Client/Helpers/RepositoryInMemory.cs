@@ -11,11 +11,11 @@ namespace BlazorTest.Client.Helpers
             return new List<Movie>()
             {
                 new Movie(){
-                    Title = "<b>None</b>",
+                    Title = "Spider-Man: Far From Home",
                     ReleaseDate = DateTime.Now
                 },
                 new Movie(){
-                    Title = "<i>None2</i>",
+                    Title = "Inception",
                     ReleaseDate = DateTime.Now
                 }
             };

@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using static BlazorTest.Client.Shared.MainLayout;
+using MathNet.Numerics.Statistics;
 
 namespace BlazorTest.Client.Pages
 {
@@ -20,9 +21,13 @@ namespace BlazorTest.Client.Pages
         [JSInvokable]
         public async Task IncrementCount()
         {
+            var arrayTest = new double[] { 1, 2, 3, 4, 5 };
+            var max = arrayTest.Maximum();
+            var min = arrayTest.Minimum();
+
             // Javascript Isolation
             module = await js.InvokeAsync<IJSObjectReference>("import", "./js/Counter.js");
-            await module.InvokeVoidAsync("displayAlert", "Hello world");
+            await module.InvokeVoidAsync("displayAlert", $"Max is {max}");
 
             currentCount++;
             singleton.Value += 1;
